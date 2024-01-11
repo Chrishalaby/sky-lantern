@@ -76,6 +76,24 @@ export class AppComponent {
   addedToCart: Cart = { white: 0, pink: 0, orange: 0 };
   showCartDialog = false;
 
+  socialMediaLinks = [
+    {
+      name: 'Facebook',
+      url: 'https://www.facebook.com/yourpage',
+      icon: 'pi-facebook',
+    },
+    {
+      name: 'Instagram',
+      url: 'https://www.instagram.com/yourpage',
+      icon: 'pi-instagram',
+    },
+    {
+      name: 'TikTok',
+      url: 'https://www.tiktok.com/@yourpage',
+      icon: 'pi-hashtag',
+    },
+  ];
+
   private cartState = new BehaviorSubject<Cart>(this.addedToCart);
   cartItems$ = this.cartState.pipe(
     map((cart) =>
@@ -135,7 +153,6 @@ export class AppComponent {
   }
 
   removeProduct(productColor: LanternColor): void {
-    console.log(productColor);
     this.addedToCart[productColor as keyof Cart] = 0;
     this.messageService.add({
       severity: 'info',

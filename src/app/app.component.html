@@ -234,6 +234,42 @@
         </div>
       </div>
     </p-tabPanel>
+    <p-tabPanel header="Contact Us">
+      <div class="text-900 font-bold text-3xl mb-4 mt-2">Connect With Us</div>
+
+      <div class="grid">
+        <div class="col-12 md:col-4">
+          <span class="text-900 block font-bold mb-3">Follow Us</span>
+          <ul class="py-0 pl-3 m-0 text-600 mb-3 social-media">
+            <li class="mb-2" *ngFor="let link of socialMediaLinks">
+              <a
+                href="{{ link.url }}"
+                target="_blank"
+                class="flex align-items-center gap-2"
+              >
+                <i class="{{ 'pi ' + link.icon }}" style="font-size: 1.5em"></i>
+                {{ link.name }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="col-12 md:col-4">
+          <span class="text-900 block font-bold mb-3">Contact Information</span>
+          <p class="line-height-3 text-600 p-0 m-0 mb-4">
+            <strong>Phone:</strong>
+            <a href="https://wa.me/96171067260" target="_blank"
+              >+961 71 067 260</a
+            >
+          </p>
+          <p class="line-height-3 text-600 p-0 m-0">
+            Have questions or need assistance? Reach out to us via WhatsApp or
+            follow us on social media for updates and more.
+          </p>
+        </div>
+      </div>
+    </p-tabPanel>
   </p-tabView>
 </section>
 
