@@ -113,19 +113,19 @@ export class AppComponent {
   showCartDialog = false;
 
   socialMediaLinks = [
-    {
-      name: 'Facebook',
-      url: 'https://www.facebook.com/yourpage',
-      icon: 'pi-facebook',
-    },
+    // {
+    //   name: 'Facebook',
+    //   url: 'https://www.facebook.com/yourpage',
+    //   icon: 'pi-facebook',
+    // },
     {
       name: 'Instagram',
-      url: 'https://www.instagram.com/yourpage',
+      url: 'https://www.instagram.com/lanternlb',
       icon: 'pi-instagram',
     },
     {
       name: 'TikTok',
-      url: 'https://www.tiktok.com/@yourpage',
+      url: 'https://www.tiktok.com/@lanternlb',
       icon: 'pi-hashtag',
     },
   ];
