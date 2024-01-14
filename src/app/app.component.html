@@ -297,23 +297,28 @@
           [useGrouping]="false"
         ></p-inputNumber>
       </div>
-      <div>
-        <input
-          placeholder="Address"
-          formControlName="address"
-          pInputText
-          class="w-full mb-2"
-        />
-      </div>
-      <div>
-        <input
-          placeholder="Special Instructions"
-          type="text"
-          pInputText
-          class="w-full mb-2"
-          formControlName="message"
-        />
-      </div>
+      <input
+        placeholder="Address"
+        formControlName="address"
+        pInputText
+        class="w-full mb-2"
+      />
+
+      <input
+        placeholder="Special Instructions"
+        type="text"
+        pInputText
+        class="w-full mb-2"
+        formControlName="message"
+      />
+
+      <input
+        type="text"
+        placeholder="Coupon Code"
+        pInputText
+        class="w-full mb-2"
+        formControlName="coupon"
+      />
 
       <p-button
         pbutton
@@ -339,6 +344,7 @@
         [rounded]="true"
         severity="danger"
         (click)="removeProduct(item.color)"
+        [disabled]="item.quantity === 0"
       ></p-button>
     </li>
     <p-button

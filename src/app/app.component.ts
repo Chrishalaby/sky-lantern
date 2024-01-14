@@ -72,6 +72,7 @@ export class AppComponent {
     address: ['', Validators.required],
     phone: [null, Validators.required],
     message: '',
+    coupon: '',
   });
   addedToCart: Cart = { white: 0, pink: 0, orange: 0 };
   showCartDialog = false;
