@@ -38,7 +38,7 @@
             <i class="pi pi-star text-600 mr-1"></i>
           </span>
           <span class="text-sm"
-            ><b class="text-900 mr-1">24</b>
+            ><b class="text-900 mr-1">4</b>
             <span class="text-500"></span>reviews</span
           >
         </div>
@@ -169,44 +169,36 @@
         </div>
       </div>
     </p-tabPanel>
-    <!-- <p-tabPanel header="Reviews">
+    <p-tabPanel header="Reviews">
       <div class="text-900 font-bold text-3xl mb-4 mt-2">Customer Reviews</div>
       <ul class="list-none p-0 m-0">
-        <li class="pb-5 border-bottom-1 surface-border">
-          <span>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-gray-500"></i>
+        <li
+          *ngFor="let review of reviews"
+          class="pb-5 border-bottom-1 surface-border"
+        >
+          <span class="flex flex-row mt-2">
+            <div class="text-900 font-bold text-xl">
+              {{ review.title }}
+            </div>
+            <span class="ml-2">
+              <i
+                *ngFor="let filled of getStarsArray(review.stars)"
+                class="pi pi-star-fill"
+                [ngClass]="filled ? 'text-yellow-500' : 'text-gray-500'"
+              ></i>
+            </span>
           </span>
-          <div class="text-900 font-bold text-xl my-3">
-            Absolute Perfection!
-          </div>
+
           <p class="mx-0 mt-0 mb-3 text-600 line-height-3">
-            Blandit libero volutpat sed cras ornare arcu dui vivamus. Arcu
-            dictum varius duis at consectetur lorem donec massa. Imperdiet proin
-            fermentum leo vel orci porta non. Porttitor rhoncus dolor purus non.
+            {{ review.content }}
           </p>
-          <span class="font-medium">Darlene Robertson, 2 days ago</span>
-        </li>
-        <li class="py-5 border-bottom-1 surface-border">
-          <span>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500"></i>
-          </span>
-          <div class="text-900 font-bold text-xl my-3">Classy</div>
-          <p class="mx-0 mt-0 mb-3 text-600 line-height-3">
-            Venenatis cras sed felis eget. Proin nibh nisl condimentum id
-            venenatis a condimentum.
-          </p>
-          <span class="font-medium">Kristin Watson, 2 days ago</span>
+          <span class="font-medium"
+            >{{ review.author }}, {{ review.date }}</span
+          >
         </li>
       </ul>
-    </p-tabPanel> -->
+    </p-tabPanel>
+
     <p-tabPanel header="Shipping and Returns">
       <div class="text-900 font-bold text-3xl mb-4 mt-2">
         Shipping Placeholder

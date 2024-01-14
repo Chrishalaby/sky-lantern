@@ -33,6 +33,15 @@ interface Cart {
   pink: number;
   orange: number;
 }
+
+interface Review {
+  stars: number;
+  title: string;
+  content: string;
+  author: string;
+  date: string;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -67,6 +76,32 @@ export class AppComponent {
     { id: 4, image: '4.png' },
     { id: 5, image: '5.png' },
   ];
+
+  reviews: Review[] = [
+    {
+      stars: 5,
+      title: 'Magical Experience!',
+      content: 'Absolutely loved them!',
+      author: 'Chady El Khoury',
+      date: '1 day ago',
+    },
+    {
+      stars: 4,
+      title: 'Beautiful and Easy to Use',
+      content: 'Really beautiful lanterns and easy to set up.',
+      author: 'Ahmad Farhat',
+      date: '3 days ago',
+    },
+    {
+      stars: 5,
+      title: 'Amazing!',
+      content:
+        'The lanterns were the highlight of my birthday party. Thank you amazing!',
+      author: 'George Maalouf',
+      date: '5 days ago',
+    },
+  ];
+
   shippingForm = this.formBuilder.group({
     name: ['', Validators.required],
     address: ['', Validators.required],
@@ -183,5 +218,11 @@ export class AppComponent {
 
   private updateCart(): void {
     this.cartState.next(this.addedToCart);
+  }
+
+  getStarsArray(stars: number) {
+    return Array(5)
+      .fill(false)
+      .map((_, index) => index < stars);
   }
 }
