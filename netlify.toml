@@ -9,3 +9,13 @@
   to = "/index.html"
   status = 200
   force = true
+
+[[headers]]
+  for = "/assets/images/*.webp"
+  [headers.values]
+  Content-Type = "image/webp"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+  Content-Type = "application/javascript"
