@@ -31,7 +31,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/robots.txt",
-              "src/sitemap.xml"
+              "src/sitemap.xml",
+              "src/google7e24d6006287106f.html"
             ],
             "styles": [
               "src/styles.scss",
