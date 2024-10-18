@@ -37,14 +37,10 @@
               aria-hidden="true"
               *ngFor="let star of getStarsArray(4)"
             ></i>
-            <i
-              class="pi pi-star text-600 mr-1"
-              aria-hidden="true"
-              *ngFor="let star of getStarsArray(1)"
-            ></i>
+            <i class="pi pi-star text-600 mr-1" aria-hidden="true"></i>
           </span>
           <span class="text-sm">
-            <b class="text-900 mr-1">4</b>
+            <b class="text-900 mr-1">100+</b>
             <span class="text-500">reviews</span>
           </span>
         </div>
@@ -208,10 +204,7 @@
             <h3 class="text-900 font-bold text-xl">
               {{ review.title }}
             </h3>
-            <p
-              class="ml-2"
-              aria-label="Rating: {{ review.stars }} out of 5 stars"
-            >
+            <span class="ml-2">
               <i
                 *ngFor="let filled of getStarsArray(review.stars)"
                 class="pi"
@@ -222,7 +215,7 @@
                 "
                 aria-hidden="true"
               ></i>
-            </p>
+            </span>
           </div>
 
           <p class="mx-0 mt-0 mb-3 text-600 line-height-3">
@@ -286,7 +279,6 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex align-items-center gap-2"
-                aria-label="Follow us on {{ link.name }}"
               >
                 <i
                   class="{{ 'pi ' + link.icon }}"
@@ -433,7 +425,7 @@
   <p-button
     label="Proceed to Checkout"
     (click)="showDialog()"
-    [disabled]="isCartEmpty$ | async"
+    [disabled]="(isCartEmpty$ | async) || false"
     styleClass="w-full mt-4"
   ></p-button>
 </p-dialog>

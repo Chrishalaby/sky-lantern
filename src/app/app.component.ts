@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
@@ -55,7 +55,6 @@ interface Review {
     FormsModule,
     DialogModule,
     ReactiveFormsModule,
-    HttpClientModule,
     ToastModule,
     InputTextModule,
   ],
@@ -115,6 +114,7 @@ export class AppComponent implements OnInit {
     message: '',
     coupon: '',
   });
+
   addedToCart: Cart = { white: 0, pink: 0, orange: 0 };
   showCartDialog = false;
 
@@ -132,6 +132,7 @@ export class AppComponent implements OnInit {
   ];
 
   private cartState = new BehaviorSubject<Cart>(this.addedToCart);
+
   cartItems$ = this.cartState.pipe(
     map((cart) =>
       Object.entries(cart).map(([color, quantity]) => ({
@@ -140,6 +141,7 @@ export class AppComponent implements OnInit {
       }))
     )
   );
+
   isCartEmpty$ = this.cartState.pipe(
     map((cart) => Object.values(cart).every((quantity) => quantity === 0)),
     startWith(true)
