@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "/google7e24d6006287106f.html"
+  to = "/google7e24d6006287106f.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
