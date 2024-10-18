@@ -25,6 +25,6 @@
   [headers.values]
   Content-Type = "application/javascript"
 
-  [build]
-  publish = "dist/sky-lantern"
+[build]
+  publish = "dist/sky-lantern/browser"
   command = "ng build --configuration=production"
