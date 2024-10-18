@@ -2,29 +2,8 @@
   from = "/google7e24d6006287106f.html"
   to = "/google7e24d6006287106f.html"
   status = 200
-  force = true
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  force = true
-
-[[headers]]
-  for = "/assets/images/*.webp"
-  [headers.values]
-  Content-Type = "image/webp"
-
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-  Content-Type = "application/javascript"
-
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-  Content-Type = "application/javascript"
-
-[build]
-  publish = "dist/sky-lantern/browser"
-  command = "ng build --configuration=production"
