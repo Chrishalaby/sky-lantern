@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -16,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { BehaviorSubject, map, startWith } from 'rxjs';
+import { SeoService } from './seo.service';
 
 interface Lantern {
   id: number;
@@ -60,21 +61,26 @@ interface Review {
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [FormBuilder, HttpClient, MessageService],
+  providers: [MessageService],
 })
-export class AppComponent {
-  title = 'sky-lantern';
+export class AppComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private http = inject(HttpClient);
+  private messageService = inject(MessageService);
+  private seoService = inject(SeoService);
+
+  title = 'Sky Lantern Store';
   selectedImageIndex = 1;
   quantity = 1;
   color: LanternColor = LanternColor.White;
   lanternColors = Object.values(LanternColor);
   display = false;
   lanterns: Lantern[] = [
-    { id: 1, image: '1.png' },
-    { id: 2, image: '2.png' },
-    { id: 3, image: '3.png' },
-    { id: 4, image: '4.png' },
-    { id: 5, image: '5.png' },
+    { id: 1, image: '1.webp' },
+    { id: 2, image: '2.webp' },
+    { id: 3, image: '3.webp' },
+    { id: 4, image: '4.webp' },
+    { id: 5, image: '5.webp' },
   ];
 
   reviews: Review[] = [
@@ -105,7 +111,7 @@ export class AppComponent {
   shippingForm = this.formBuilder.group({
     name: ['', Validators.required],
     address: ['', Validators.required],
-    phone: [null, Validators.required],
+    phone: [null, [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
     message: '',
     coupon: '',
   });
@@ -113,11 +119,6 @@ export class AppComponent {
   showCartDialog = false;
 
   socialMediaLinks = [
-    // {
-    //   name: 'Facebook',
-    //   url: 'https://www.facebook.com/yourpage',
-    //   icon: 'pi-facebook',
-    // },
     {
       name: 'Instagram',
       url: 'https://www.instagram.com/lanternlb',
@@ -144,11 +145,28 @@ export class AppComponent {
     startWith(true)
   );
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private http: HttpClient,
-    private messageService: MessageService
-  ) {}
+  ngOnInit() {
+    this.updateSeoTags();
+  }
+
+  private updateSeoTags() {
+    this.seoService.updateTitle(this.title);
+    this.seoService.updateDescription(
+      'Beautiful sky lanterns for all your celebrations. Eco-friendly and easy to use.'
+    );
+    this.seoService.updateKeywords([
+      'sky lanterns',
+      'eco-friendly',
+      'celebrations',
+      'weddings',
+      'parties',
+    ]);
+    this.seoService.updateOgTags(
+      this.title,
+      'Beautiful sky lanterns for all your celebrations. Eco-friendly and easy to use.',
+      'https://lanternlb.netlify.app/assets/images/1.webp'
+    );
+  }
 
   showDialog(): void {
     this.showCartDialog = false;
@@ -170,6 +188,7 @@ export class AppComponent {
         summary: 'Success',
         detail: 'Order Placed Successfully',
       });
+      this.resetCart();
     });
   }
 
@@ -217,6 +236,11 @@ export class AppComponent {
   }
 
   private updateCart(): void {
+    this.cartState.next(this.addedToCart);
+  }
+
+  private resetCart(): void {
+    this.addedToCart = { white: 0, pink: 0, orange: 0 };
     this.cartState.next(this.addedToCart);
   }
 

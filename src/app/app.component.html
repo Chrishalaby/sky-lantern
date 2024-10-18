@@ -1,5 +1,5 @@
 <p-toast></p-toast>
-<section class="card">
+<section class="card" aria-label="Sky Lantern Product Page">
   <div class="grid mb-7">
     <div class="col-12 lg:col-7">
       <div class="flex">
@@ -11,41 +11,51 @@
             *ngFor="let lantern of lanterns; let i = index"
             [ngClass]="{ 'border-primary': selectedImageIndex === i }"
             src="assets/images/{{ lantern.image }}"
+            [alt]="'Sky Lantern image ' + (i + 1)"
             class="w-full cursor-pointer border-2 border-transparent transition-colors transition-duration-150 border-round"
             (click)="selectedImageIndex = i"
+            [attr.aria-selected]="selectedImageIndex === i"
           />
         </div>
         <div class="pl-3 w-10 flex">
           <img
             src="assets/images/{{ lanterns[selectedImageIndex].image }}"
+            [alt]="'Selected Sky Lantern image ' + (selectedImageIndex + 1)"
             class="w-full border-2 border-transparent border-round"
           />
         </div>
       </div>
     </div>
     <div class="col-12 lg:col-4 py-3 lg:pl-6">
-      <div class="flex align-items-center text-2xl font-medium text-900 mb-4">
-        <b>Sky Lantern</b>
-      </div>
+      <h1 class="text-2xl font-medium text-900 mb-4">Sky Lantern</h1>
       <div class="flex align-items-center justify-content-between mb-5">
         <span class="text-900 font-medium text-3xl block">$3</span>
         <div class="flex align-items-center">
-          <span class="mr-3">
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star-fill text-yellow-500 mr-1"></i>
-            <i class="pi pi-star text-600 mr-1"></i>
+          <span class="mr-3" aria-label="Product rating">
+            <i
+              class="pi pi-star-fill text-yellow-500 mr-1"
+              aria-hidden="true"
+              *ngFor="let star of getStarsArray(4)"
+            ></i>
+            <i
+              class="pi pi-star text-600 mr-1"
+              aria-hidden="true"
+              *ngFor="let star of getStarsArray(1)"
+            ></i>
           </span>
-          <span class="text-sm"
-            ><b class="text-900 mr-1">4</b>
-            <span class="text-500"></span>reviews</span
-          >
+          <span class="text-sm">
+            <b class="text-900 mr-1">4</b>
+            <span class="text-500">reviews</span>
+          </span>
         </div>
       </div>
 
       <div class="font-bold text-900 mb-3">Color</div>
-      <div class="flex align-items-center mb-5">
+      <div
+        class="flex align-items-center mb-5"
+        role="radiogroup"
+        aria-label="Lantern color selection"
+      >
         <div
           *ngFor="let lanternColor of lanternColors"
           [ngClass]="getColorClass(lanternColor)"
@@ -53,7 +63,12 @@
             lanternColor === color ? '0 0 0 0.2rem var(--orange-100)' : null
           "
           (click)="color = lanternColor"
+          (keydown.enter)="color = lanternColor"
           class="mx-2 w-2rem h-2rem flex-shrink-0 border-circle cursor-pointer border-2 surface-border transition-all transition-duration-300"
+          [attr.aria-label]="lanternColor + ' lantern'"
+          [attr.aria-checked]="lanternColor === color"
+          role="radio"
+          tabindex="0"
         ></div>
       </div>
 
@@ -72,6 +87,7 @@
           incrementButtonClass="p-button-text"
           incrementButtonIcon="pi pi-plus"
           decrementButtonIcon="pi pi-minus"
+          aria-label="Quantity"
         ></p-inputNumber>
         <div class="flex align-items-center flex-1 mt-3 sm:mt-0 ml-0 sm:ml-5">
           <p-button
@@ -79,6 +95,15 @@
             label="Add To Cart"
             (click)="addToCart()"
             class="flex-1 mr-5"
+            [attr.aria-label]="
+              'Add ' +
+              quantity +
+              ' ' +
+              color +
+              ' lantern' +
+              (quantity > 1 ? 's' : '') +
+              ' to cart'
+            "
           ></p-button>
         </div>
         <div
@@ -90,12 +115,13 @@
             label="Show Cart"
             (click)="showCart()"
             class="flex-1 mr-5"
+            aria-label="Show shopping cart"
           ></p-button>
         </div>
       </div>
 
       <div>
-        <div class="font-bold text-900 mt-3">Offers</div>
+        <h2 class="font-bold text-900 mt-3">Offers</h2>
         <ul>
           <li>4 Lanterns: <span class="line-through">12$</span> <b> 10$</b></li>
           <li>6 Lanterns: <span class="line-through">18$</span> <b> 15$</b></li>
@@ -111,7 +137,7 @@
 
   <p-tabView>
     <p-tabPanel header="Details">
-      <div class="text-900 font-bold text-3xl mb-4 mt-2">Product Details</div>
+      <h2 class="text-900 font-bold text-3xl mb-4 mt-2">Product Details</h2>
       <p class="line-height-3 text-600 p-0 mx-0 mt-0 mb-4">
         Our sky lanterns are crafted with eco-friendly, biodegradable materials,
         offering a magical experience while ensuring environmental safety. Each
@@ -124,9 +150,7 @@
 
       <div class="grid">
         <div class="col-12 lg:col-4">
-          <span class="text-900 block font-medium mb-3 font-bold"
-            >Highlights</span
-          >
+          <h3 class="text-900 block font-medium mb-3 font-bold">Highlights</h3>
           <ul class="py-0 pl-3 m-0 text-600 mb-3">
             <li class="mb-2">Environmentally friendly materials.</li>
             <li class="mb-2">Easy to light and release.</li>
@@ -135,7 +159,7 @@
           </ul>
         </div>
         <div class="col-12 lg:col-4">
-          <span class="text-900 block mb-3 font-bold">Size and Fit</span>
+          <h3 class="text-900 block mb-3 font-bold">Size and Fit</h3>
           <ul class="list-none p-0 m-0 text-600 mb-4 text-600">
             <li class="mb-3">
               <span class="font-semibold">Dimensions:</span> Standard size,
@@ -152,18 +176,21 @@
           </ul>
         </div>
         <div class="col-12 lg:col-4">
-          <span class="text-900 block mb-3 font-bold">Material & Care</span>
+          <h3 class="text-900 block mb-3 font-bold">Material & Care</h3>
           <ul class="p-0 m-0 flex flex-wrap flex-column text-600">
             <li
               class="flex align-items-center white-space-nowrap w-10rem block mr-2 mb-3"
             >
-              <i class="pi pi-sun mr-2 text-900"></i>
+              <i class="pi pi-sun mr-2 text-900" aria-hidden="true"></i>
               <span>Fire-resistant material</span>
             </li>
             <li
               class="flex align-items-center white-space-nowrap w-10rem block mb-3"
             >
-              <i class="pi pi-minus-circle mr-2 text-900"></i>
+              <i
+                class="pi pi-minus-circle mr-2 text-900"
+                aria-hidden="true"
+              ></i>
               <span>Biodegradable, leaves no waste</span>
             </li>
           </ul>
@@ -171,24 +198,32 @@
       </div>
     </p-tabPanel>
     <p-tabPanel header="Reviews">
-      <div class="text-900 font-bold text-3xl mb-4 mt-2">Customer Reviews</div>
+      <h2 class="text-900 font-bold text-3xl mb-4 mt-2">Customer Reviews</h2>
       <ul class="list-none p-0 m-0">
         <li
           *ngFor="let review of reviews"
           class="pb-5 border-bottom-1 surface-border"
         >
-          <span class="flex flex-row mt-2">
-            <div class="text-900 font-bold text-xl">
+          <div class="flex flex-row mt-2">
+            <h3 class="text-900 font-bold text-xl">
               {{ review.title }}
-            </div>
-            <span class="ml-2">
+            </h3>
+            <p
+              class="ml-2"
+              aria-label="Rating: {{ review.stars }} out of 5 stars"
+            >
               <i
                 *ngFor="let filled of getStarsArray(review.stars)"
-                class="pi pi-star-fill"
-                [ngClass]="filled ? 'text-yellow-500' : 'text-gray-500'"
+                class="pi"
+                [ngClass]="
+                  filled
+                    ? 'pi-star-fill text-yellow-500'
+                    : 'pi-star text-gray-500'
+                "
+                aria-hidden="true"
               ></i>
-            </span>
-          </span>
+            </p>
+          </div>
 
           <p class="mx-0 mt-0 mb-3 text-600 line-height-3">
             {{ review.content }}
@@ -201,9 +236,9 @@
     </p-tabPanel>
 
     <p-tabPanel header="Shipping and Returns">
-      <div class="text-900 font-bold text-3xl mb-4 mt-2">
-        Shipping Placeholder
-      </div>
+      <h2 class="text-900 font-bold text-3xl mb-4 mt-2">
+        Shipping Information
+      </h2>
       <p class="line-height-3 text-600 p-0 mx-0 mt-0 mb-4">
         We are working on offering worldwide shipping with tracking on all
         orders. Our sky lanterns are carefully packaged to ensure they arrive in
@@ -213,16 +248,16 @@
 
       <div class="grid">
         <div class="col-12 md:col-4">
-          <span class="text-900 block font-bold mb-3 font-bold"
-            >Shipping Costs</span
-          >
+          <h3 class="text-900 block font-bold mb-3 font-bold">
+            Shipping Costs
+          </h3>
           <ul class="py-0 pl-3 m-0 text-600 mb-3">
             <li class="mb-2">Beirut - USD 3</li>
             <li class="mb-2">Other - USD 4</li>
           </ul>
         </div>
         <div class="col-12 md:col-4">
-          <span class="text-900 block font-bold mb-3">Pick Up Points</span>
+          <h3 class="text-900 block font-bold mb-3">Pick Up Points</h3>
           <ul class="py-0 pl-3 m-0 text-600 mb-3">
             <li class="mb-2">Dbayeh</li>
             <li class="mb-2">Naccache</li>
@@ -231,7 +266,7 @@
         </div>
 
         <div class="col-12 md:col-4">
-          <span class="text-900 block font-bold mb-3">Return Policy</span>
+          <h3 class="text-900 block font-bold mb-3">Return Policy</h3>
           <p class="line-height-3 text-600 p-0 m-0">
             We Offer NO Returns, Once bought, you can't return the product.
           </p>
@@ -239,36 +274,40 @@
       </div>
     </p-tabPanel>
     <p-tabPanel header="Contact Us">
-      <div class="text-900 font-bold text-3xl mb-4 mt-2">Connect With Us</div>
+      <h2 class="text-900 font-bold text-3xl mb-4 mt-2">Connect With Us</h2>
 
       <div class="grid">
         <div class="col-12 md:col-4">
-          <span class="text-900 block font-bold mb-3">Follow Us</span>
+          <h3 class="text-900 block font-bold mb-3">Follow Us</h3>
           <ul class="py-0 pl-3 m-0 text-600 mb-3 social-media">
             <li class="mb-2" *ngFor="let link of socialMediaLinks">
               <a
                 href="{{ link.url }}"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="flex align-items-center gap-2"
+                aria-label="Follow us on {{ link.name }}"
               >
-                <i class="{{ 'pi ' + link.icon }}" style="font-size: 1.5em"></i>
+                <i
+                  class="{{ 'pi ' + link.icon }}"
+                  style="font-size: 1.5em"
+                  aria-hidden="true"
+                ></i>
                 {{ link.name }}
               </a>
             </li>
           </ul>
         </div>
 
-        <!-- Contact Information -->
         <div class="col-12 md:col-4">
-          <span class="text-900 block font-bold mb-3">Contact Information</span>
+          <h3 class="text-900 block font-bold mb-3">Contact Information</h3>
           <p class="line-height-3 p-0 m-0 mb-4">
             <strong>Phone:</strong>
-            <a href="https://wa.me/96171067260" target="_blank"
+            <a
+              href="https://wa.me/96171067260"
+              target="_blank"
+              rel="noopener noreferrer"
               >+961 71 067 260</a
-            >
-            /
-            <a href="https://wa.me/96171067260" target="_blank"
-              >+961 70 431 214</a
             >
           </p>
           <p class="line-height-3 text-600 p-0 m-0">
@@ -281,79 +320,120 @@
   </p-tabView>
 </section>
 
-<p-dialog header="Shipping Information" [(visible)]="display">
-  <div class="flex align-content-center justify-content-center">
-    <p-card [formGroup]="shippingForm" class="my-1">
-      <div class="flex md:flex-row flex-column gap-1 mb-2">
+<p-dialog
+  header="Shipping Information"
+  [(visible)]="display"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form
+    [formGroup]="shippingForm"
+    (ngSubmit)="confirm()"
+    class="flex flex-column gap-2"
+  >
+    <div class="flex md:flex-row flex-column gap-2">
+      <div class="flex-1">
+        <label for="name" class="block mb-2">Name</label>
         <input
-          placeholder="Name"
-          formControlName="name"
+          id="name"
+          type="text"
           pInputText
+          formControlName="name"
           class="w-full"
+          placeholder="Your Name"
+          aria-required="true"
         />
+      </div>
+      <div class="flex-1">
+        <label for="phone" class="block mb-2">Phone Number</label>
         <p-inputNumber
-          placeholder="Phone Number"
+          id="phone"
           formControlName="phone"
-          class="w-full"
-          mode="decimal"
           [useGrouping]="false"
+          placeholder="Phone Number"
+          class="w-full"
+          aria-required="true"
         ></p-inputNumber>
       </div>
+    </div>
+    <div class="flex-1">
+      <label for="address" class="block mb-2">Address</label>
       <input
-        placeholder="Address"
+        id="address"
+        type="text"
+        pInputText
         formControlName="address"
-        pInputText
-        class="w-full mb-2"
+        class="w-full"
+        placeholder="Delivery Address"
+        aria-required="true"
       />
-
+    </div>
+    <div class="flex-1">
+      <label for="message" class="block mb-2">Special Instructions</label>
       <input
-        placeholder="Special Instructions"
+        id="message"
         type="text"
         pInputText
-        class="w-full mb-2"
         formControlName="message"
+        class="w-full"
+        placeholder="Any special instructions?"
       />
-
+    </div>
+    <div class="flex-1">
+      <label for="coupon" class="block mb-2">Coupon Code</label>
       <input
+        id="coupon"
         type="text"
-        placeholder="Coupon Code"
         pInputText
-        class="w-full mb-2"
         formControlName="coupon"
+        class="w-full"
+        placeholder="Enter coupon code if you have one"
       />
-
-      <p-button
-        pbutton
-        label="Finalize your order"
-        icon="pi pi-fw pi-check"
-        class="p-button-primary w-full lg:w-auto flex-order-1 lg:flex-order-2"
-        [disabled]="!shippingForm.valid"
-        (onClick)="confirm()"
-      ></p-button>
-    </p-card>
-  </div>
+    </div>
+    <p-button
+      type="submit"
+      label="Finalize your order"
+      icon="pi pi-check"
+      styleClass="p-button-primary w-full mt-4"
+      [disabled]="!shippingForm.valid"
+    ></p-button>
+  </form>
 </p-dialog>
 
-<p-dialog header="My Cart" [(visible)]="showCartDialog">
-  <ul class="pl-0 flex flex-column gap-1 mx-4">
+<p-dialog
+  header="My Cart"
+  [(visible)]="showCartDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ul class="list-none pl-0 flex flex-column gap-3">
     <li
       *ngFor="let item of cartItems$ | async"
-      class="flex align-items-center justify-content-between gap-1"
+      class="flex align-items-center justify-content-between"
     >
-      <span>{{ item.quantity }} {{ item.color }} Lanterns</span>
+      <span
+        >{{ item.quantity }} {{ item.color }} Lantern{{
+          item.quantity > 1 ? "s" : ""
+        }}</span
+      >
       <p-button
         icon="pi pi-trash"
         [rounded]="true"
         severity="danger"
         (click)="removeProduct(item.color)"
         [disabled]="item.quantity === 0"
+        [attr.aria-label]="'Remove ' + item.color + ' lanterns from cart'"
       ></p-button>
     </li>
-    <p-button
-      pRipple
-      label="Buy"
-      (click)="showDialog()"
-      [disabled]="!!(isCartEmpty$ | async)"
-    ></p-button>
   </ul>
+  <p-button
+    label="Proceed to Checkout"
+    (click)="showDialog()"
+    [disabled]="isCartEmpty$ | async"
+    styleClass="w-full mt-4"
+  ></p-button>
 </p-dialog>
